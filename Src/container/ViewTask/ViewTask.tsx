@@ -22,9 +22,17 @@ function ViewTask(props: any) {
             <CommonHeader onBackPress={()=>onBackPress()}/>
             <View style={styles.mainContainer}>
 
-                <Text style={styles.txtStyle}>
-                    {props.route.params.task}
+                <Text style={styles.txtStyle}>{"Title:   "}
+                    <Text>
+                        {props.route.params.title}
+                    </Text>
                 </Text>
+                <Text style={styles.txtStyle}>{"Task:   "}
+                    <Text>
+                    {props.route.params.task}
+                    </Text>
+                </Text>
+
             </View>
 
         </SafeAreaView>
@@ -37,7 +45,8 @@ const styles = StyleSheet.create({
 
     },txtStyle: {
         fontSize: normalize(20),
-        color:"red"
+        color:"black",
+        fontWeight:'bold'
     }
 })
 

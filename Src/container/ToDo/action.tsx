@@ -20,11 +20,12 @@ export const addButonClick = (data: object) => {
 
 
 //Update Item
-export const updateTask = (index:number,txt:string,callback:Function)=> {
-
+export const updateTask = (index:number,txt:string,title:string,callback:Function)=> {
+//alert(title)
     return function (dispatch: Function, getState: Function) {
         let tempData = getState().TodoReducer.dataSource
         tempData[index].data=txt
+        tempData[index].title=title
 
         dispatch({
             type:ActionType.INTIALSTATE,

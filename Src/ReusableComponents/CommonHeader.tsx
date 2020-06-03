@@ -21,7 +21,8 @@ parentHeadrrStyle:{
     backgroundColor:'blue'
 },backTstStyle:{
     fontSize:normalize(13),
-        marginLeft:normalize(20)
+        marginLeft:normalize(20),
+        color:'white'
 
     }
 });

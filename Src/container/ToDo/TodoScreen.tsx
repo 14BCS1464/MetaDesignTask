@@ -12,6 +12,7 @@ import {addButonClick,updateTask,deleteTask} from './action'
 function ToDoScreen(props: any) {
 
     const [addTodo,setToDo]= useState("")
+    const [addTitle,setTitleTxt]=useState("")
     const [isUpdate,setIsUpdate]= useState(false)
     const [updateIndex,setUpdateIndex]= useState(null)
 
@@ -23,20 +24,29 @@ function ToDoScreen(props: any) {
     //this function work for add and update task
    const  onAddClick=()=>{
         if(isUpdate){
-            props.updateTask(updateIndex,addTodo,()=>{
+            props.updateTask(updateIndex,addTodo,addTitle,()=>{
                 setIsUpdate(false),
-                    setToDo("")
+                    setToDo(""),
+                    setTitleTxt("")
+
             })
         }else {
-            if(!addTodo){
-                alert("please add task")
-            }else {
+            if(!addTitle){
+                alert("Please add Title")
+            }else if(!addTodo)
+            {
+                alert("Please add Task Detail")
+            }
+            else {
                 let tempObject = {
-                    data: addTodo,
-                    addTime: new Date(),
+                    title:addTitle.trim(),
+                    data: addTodo.trim(),
+                    addTime: new Date().getDate()+" / "+new Date().getMonth()+" / "+new Date().getFullYear()
 
                 }
                 props.addButonClick(tempObject)
+                setTitleTxt("")
+
                 setToDo("")
             }
         }
@@ -45,6 +55,7 @@ function ToDoScreen(props: any) {
    //onUpdate Click
     const updateClick=(index:number)=>{
         setToDo(props.data[index].data)
+        setTitleTxt(props.data[index].title)
         setIsUpdate(true)
         setUpdateIndex(index)
     }
@@ -54,7 +65,9 @@ function ToDoScreen(props: any) {
     const onViewClick=(index:number)=>{
 
           props.navigation.navigate("ViewTask",{
-              task:props.data[index].data
+              task:props.data[index].data,
+              title:props.data[index].title,
+
           })
     }
 
@@ -63,6 +76,7 @@ function ToDoScreen(props: any) {
         if(index === updateIndex){
             setIsUpdate(false),
                 setToDo("")
+            setTitleTxt("")
         }
       props.deleteTask(index)
     }
@@ -76,7 +90,7 @@ function ToDoScreen(props: any) {
                 style={[styles.flatListStyle]}
                 onEndReachedThreshold={0.7}
                 data={props.data}
-                key
+                keyboardDismissMode="on-drag"
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => {
@@ -92,23 +106,42 @@ function ToDoScreen(props: any) {
     }
 
 
+
+const  setText=(val:string)=>{
+    setToDo(val)
+}
+
+const setTitle=(val:string)=>{
+    setTitleTxt(val)
+}
+
     return (
         <SafeAreaView style={{flex:1}}>
             <View style={styles.mainContainer}>
                 <View style={styles.textInputContainewr}>
+                    <View>
+                    <CommonTextInput
+                        value={addTitle}
+                        extraStyle={styles.extraTitleStyle}
+                        onChangeText={(val: string) =>setTitle(val)}
+                        placeholder={"Add Task Title"}
+                    />
                 <CommonTextInput
                     value={addTodo}
-                    textAlignVertical: "top"
                     extraStyle={styles.extraStyle}
-                    onChangeText={(val: string) => setToDo(val)}
-                    placeholder={"Add Task Here"}
+                    onChangeText={(val: string) => setText(val)}
+                    placeholder={"Add Task Detail"}
                 />
+                </View>
                 <TouchableOpacity  onPress={()=>onAddClick()} style={styles.addButtonStyle}>
-                    <Text>
+                    <Text style={styles.txtStyle}>
                         {  isUpdate? "Update Task":"Add Task"}
                         </Text>
                 </TouchableOpacity>
                 </View>
+                <Text style={styles.yourTxtStyle}>
+                    {"Your Tasks :"}
+                </Text>
                 {taskList()}
             </View>
 
@@ -117,7 +150,7 @@ function ToDoScreen(props: any) {
 }
 const styles = StyleSheet.create({
     mainContainer:{
-        flex:1,backgroundColor:'blue',
+        flex:1,backgroundColor:'gray',
 
 
 
@@ -145,8 +178,22 @@ height:normalize(100),
         borderRadius:10
 
     },flatListStyle:{
+        marginTop:normalize(10),
+    },txtStyle: {
+        fontSize: normalize(15),
+        color: 'white'
+    },yourTxtStyle:{
+         fontSize:(20),
+        color:"white",
         marginTop:normalize(20),
+        marginLeft: normalize(30)
+        },extraTitleStyle:{
+        height:normalize(60),
+        width:normalize(250),
+        marginLeft:normalize(20),
+        marginTop:normalize(20)
     }
+
 })
 
 

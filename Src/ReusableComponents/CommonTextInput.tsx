@@ -9,6 +9,7 @@ const CommonTextInput = (props: any) => {
                 keyboardType={props.keyboardType}
                 value={props.value}
                 multiline={true}
+                maxLength = {100}
                 placeholder={props.placeholder}
                 onChangeText={props.onChangeText}
                 style={[styles.textInputStyle,]} />
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white'
     }, textInputStyle: {
         flex: 1,
+        textAlignVertical: "top",
         fontSize:normalize(20),
         color: 'black',
         paddingHorizontal: normalize(10)
