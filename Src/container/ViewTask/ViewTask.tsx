@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
     },txtStyle: {
         fontSize: normalize(20),
-        color:"white"
+        color:"red"
     }
 })
 

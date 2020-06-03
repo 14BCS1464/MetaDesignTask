@@ -76,6 +76,7 @@ function ToDoScreen(props: any) {
                 style={[styles.flatListStyle]}
                 onEndReachedThreshold={0.7}
                 data={props.data}
+                key
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => {
@@ -97,6 +98,7 @@ function ToDoScreen(props: any) {
                 <View style={styles.textInputContainewr}>
                 <CommonTextInput
                     value={addTodo}
+                    textAlignVertical: "top"
                     extraStyle={styles.extraStyle}
                     onChangeText={(val: string) => setToDo(val)}
                     placeholder={"Add Task Here"}

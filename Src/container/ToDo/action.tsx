@@ -34,7 +34,7 @@ export const updateTask = (index:number,txt:string,callback:Function)=> {
     }
 }
 
-//Delete Task
+//Delete Tayask
 export const deleteTask = (index:number)=> {
 
     return function (dispatch: Function, getState: Function) {
